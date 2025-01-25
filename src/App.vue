@@ -1,18 +1,21 @@
 <template>
-  <div class ="container" >
-    <div class="mb-2">
+  <div class ="p-5" >
+    <div class="col-9">
   <RouterLink class="nav-link" active-class="active" to="/">
-    Anasayfa
+    Homepage
   </RouterLink>
-  <RouterLink  class="nav-link" active-class="active" to="/hakkimda">
-    Hakkımda
+  <RouterLink  class="nav-link" active-class="active" to="/about">
+    About
   </RouterLink>
-  <RouterLink  class="nav-link" active-class="active" to="/detay">
-    Detay
+  <RouterLink  class="nav-link" active-class="active" to="/brands">
+    Brands
+  </RouterLink>
+  <RouterLink  class="nav-link" active-class="active" to="/models">
+    Models
   </RouterLink>
  <RouterView></RouterView>
-</div>
   </div>
+</div>
 </template>
 
 <style>

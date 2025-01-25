@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory,  } from "vue-router";
 import HomeCmp from "@/views/Home"
 const routes = [
     {
@@ -10,23 +10,37 @@ const routes = [
     },
     {
         name:"AboutPage",
-        path: "/hakkimda",
+        path: "/about",
         // component : HomeCmp
         component : () => import("@/views/About")
         
     },
     {
-        name:"DetailPage",
-        path: "/detay/:userID",
+        name:"BrandsPage",
+        path: "/brands",
         // component : HomeCmp
-        component : () => import("@/views/Details")
+        component : () => import("@/views/Brands")
+        
+    },
+    {
+        name:"ModelsPage",
+        path: "/models",
+        // component : HomeCmp
+        component : () => import("@/views/Models")
+        
+    },
+    {
+        name:"NewModel",
+        path: "/newmodel",
+        // component : HomeCmp
+        component : () => import("@/views/NewModel")
         
     }
 ]
 const router = createRouter({
     routes : routes,
     // routes,
-    history : createWebHistory()
+    history : createWebHashHistory()
 });
 
 export default router;

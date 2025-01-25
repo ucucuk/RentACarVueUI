@@ -1,6 +1,6 @@
 <template>
     <h1>Home</h1>
-    <input type="text" @keydown.enter="goToDetails">
+    <!-- <input type="text" @keydown.enter="goToDetails"> -->
 </template>
 <script>
 export default{
