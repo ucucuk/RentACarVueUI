@@ -1,8 +1,14 @@
 <template>
-  <div class ="p-5" >
-    <div class="col-9">
+  <div class ="p-3" >
+    <!-- <div class="col-111"> -->
   <RouterLink class="nav-link" active-class="active" to="/">
     Homepage
+  </RouterLink>
+  <RouterLink class="nav-link" active-class="active" to="/register">
+    Register
+  </RouterLink>
+  <RouterLink class="nav-link" active-class="active" to="/login">
+    Login
   </RouterLink>
   <RouterLink  class="nav-link" active-class="active" to="/about">
     About
@@ -13,8 +19,11 @@
   <RouterLink  class="nav-link" active-class="active" to="/models">
     Models
   </RouterLink>
+  <RouterLink  class="nav-link" active-class="active" to="/cars">
+    Cars
+  </RouterLink>
  <RouterView></RouterView>
-  </div>
+  <!-- </div> -->
 </div>
 </template>
 

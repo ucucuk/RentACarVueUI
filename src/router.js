@@ -9,6 +9,18 @@ const routes = [
         
     },
     {
+        name:"RegisterPage",
+        path: "/register",
+        component : () => import("@/views/Register")
+        
+    },
+    {
+        name:"LoginPage",
+        path: "/login",
+        component : () => import("@/views/Login")
+        
+    },
+    {
         name:"AboutPage",
         path: "/about",
         // component : HomeCmp
@@ -30,10 +42,24 @@ const routes = [
         
     },
     {
+        name:"CarsPage",
+        path: "/cars",
+        // component : HomeCmp
+        component : () => import("@/views/Cars")
+        
+    },
+    {
         name:"NewModel",
         path: "/newmodel",
         // component : HomeCmp
         component : () => import("@/views/NewModel")
+        
+    },
+    {
+        name:"NewCar",
+        path: "/newcar",
+        // component : HomeCmp
+        component : () => import("@/views/NewCar")
         
     }
 ]

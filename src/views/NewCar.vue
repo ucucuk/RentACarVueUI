@@ -1,18 +1,20 @@
 <template>
     <div class="form-area card border p-2">
         <div class="mb-3">
-            <label for="brandName" class="form-label">Brand</label>
-            <input type="text" v-model="userData.brandName" class="form-control" id="brandName"
-                placeholder="Please enter a brand..">
+            <label for="model" class="form-label">Model</label>
+            <input type="text" v-model="userData.modelName" class="form-control" id="model" placeholder="Please enter a model..">
         </div>
         <div class="mb-3">
-            <label for="model" class="form-label">Model</label>
-            <input type="text" v-model="userData.name" class="form-control" id="model"
-                placeholder="Please enter a model..">
+            <label for="plate" class="form-label">Plate</label>
+            <input type="text" v-model="userData.plate" class="form-control" id="plate" placeholder="Please enter a plate..">
+        </div>
+        <div class="mb-3">
+            <label for="modelYear" class="form-label">Model Year</label>
+            <input type="text" v-model="userData.modelYear" class="form-control" id="modelYear" placeholder="Please enter a model year..">
         </div>
         <div class="d-flex justify-content-end align-items-center">
-            <button class="btn btn-sm btn-secondary me-2" @click="$router.push({ name: 'ModelsPage' })">Cancel</button>
-            <button class="btn btn-sm btn-primary" @click="newmodelfunc()">Save</button>
+            <button class="btn btn-sm btn-secondary me-2" @click="$router.push({ name: 'CarsPage' })">Cancel</button>
+            <button class="btn btn-sm btn-primary" @click="newCarfunc()">Save</button>
             <!-- <button class="btn btn-sm btn-primary"  @click="$router.go(-1)">Geri Git</button> -->
         </div>
     </div>
@@ -23,8 +25,9 @@ export default {
     setup() {
         return {
             userData: {
-                brandName: null,
-                name: null
+                modelName: null,
+                plate: null,
+                modelYear: null,
             }
         }
     },
@@ -32,8 +35,8 @@ export default {
         onSave() {
             console.log(this.userData);
         },
-        newmodelfunc() {
-            fetch("https://localhost:44335/api/Models", {
+        newCarfunc() {
+            fetch("https://localhost:44335/api/Cars", {
                 method: 'POST',
                 headers: {
                     //'Authorization': 'Bearer ' + this.token,
@@ -45,7 +48,7 @@ export default {
                 .then(response => response.json())
                 .then(data => {
                     console.log('Success:', data);
-                    this.$router.push({ name: 'ModelsPage' });
+                    this.$router.push({ name: 'CarsPage' });
                     this.userData = null;
                 })
                 .catch((error) => {
