@@ -1,4 +1,3 @@
-
 <template>
     <!-- <h1>{{ $route.params.userID }}</h1>
     <h1>{{ $route.query.userid }}</h1>
@@ -99,11 +98,26 @@ export default {
             this.$router.push("/");
         },
         listele() {
-            fetch("https://localhost:44335/api/Brands")
-                .then((response) => response.json())
+            fetch("https://localhost:44335/api/Brands", {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include' // Cookie'leri göndermek için
+            })
+                .then((response) => {
+                    if (response.status === 401) {
+                        console.error('Unauthorized. Check cookies and authentication!');
+                        return;
+                    }
+                    return response.json();
+                })
                 .then((data) => {
-                    console.log(data);
+                    console.log("brands ", data);
                     this.brands = data;
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
                 });
         },
         yenimarkafunc() {
