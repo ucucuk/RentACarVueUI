@@ -15,12 +15,11 @@
 
 <script>
 import { reactive } from 'vue';
-import { useStore } from 'vuex';
+import store from "./../store";
 import { useRouter } from 'vue-router';  // useRouter'ı import ediyoruz
 
 export default {
   setup() {
-    const store = useStore(); // Vuex store’a erişim
     const router = useRouter(); // useRouter ile router'a erişiyoruz
 
     // userData’yı reactive ile tanımlıyoruz
@@ -52,7 +51,9 @@ export default {
           console.log('Login:', data, data?.userName);
           if (data?.userName != null) {
             console.log("Store'da güncellenen userName:", data?.userName); // Store'a eklenen veriyi kontrol et
+            store.commit('setAuthenticated', true);
             store.commit("setUser", data?.userName);  // Vuex store’a veri ekliyoruz
+            store.dispatch('startSessionCheck');
             router.push({ name: 'HomePage' });
           }
         })

@@ -2,8 +2,8 @@
     <appHeader />
     <div class="flex flex-row">
         <SideBar />
-        <appBookmarkList/>
-        
+        <appBookmarkList />
+
 
     </div>
 
@@ -32,7 +32,7 @@ export default {
             })
         }
     }
-}
+};
 </script>
 
 <!-- <h1>Home</h1> -->
