@@ -129,7 +129,8 @@ export default {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json;charset=utf-8'
                 },
-                body: JSON.stringify(marka)
+                body: JSON.stringify(marka),
+                credentials: 'include'
             })
                 .then(response => response.json())
                 .then(data => {
@@ -148,7 +149,8 @@ export default {
                     //'Authorization': 'Bearer ' + this.token,
                     'Accept': 'application/json',
                     'Content-Type': 'application/json;charset=utf-8'
-                }
+                },
+                credentials: 'include'
             })
                 .then(data => {
                     console.log('Success:', data);
@@ -166,7 +168,8 @@ export default {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json;charset=utf-8'
                 },
-                body: JSON.stringify(duzenlenenMarka)
+                body: JSON.stringify(duzenlenenMarka),
+                credentials: 'include'
             })
                 .then(data => {
                     console.log('Success:', data);

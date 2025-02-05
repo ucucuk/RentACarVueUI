@@ -24,42 +24,42 @@ const routes = [
     {
         name: "AboutPage",
         path: "/about",
-        // component : HomeCmp
         component: () => import("@/views/About")
 
     },
     {
         name: "BrandsPage",
         path: "/brands",
-        // component : HomeCmp
         component: () => import("@/views/Brands")
 
     },
     {
         name: "ModelsPage",
         path: "/models",
-        // component : HomeCmp
         component: () => import("@/views/Models")
 
     },
     {
         name: "CarsPage",
         path: "/cars",
-        // component : HomeCmp
         component: () => import("@/views/Cars")
+
+    },
+    {
+        name: "NewBrand",
+        path: "/newbrand",
+        component: () => import("@/views/NewBrand")
 
     },
     {
         name: "NewModel",
         path: "/newmodel",
-        // component : HomeCmp
         component: () => import("@/views/NewModel")
 
     },
     {
         name: "NewCar",
         path: "/newcar",
-        // component : HomeCmp
         component: () => import("@/views/NewCar")
 
     }

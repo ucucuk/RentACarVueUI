@@ -16,13 +16,13 @@
 <script>
 import { reactive } from 'vue';
 import store from "./../store";
-import { useRouter } from 'vue-router';  // useRouter'ı import ediyoruz
+import { useRouter } from 'vue-router';  
 
 export default {
   setup() {
     const router = useRouter(); // useRouter ile router'a erişiyoruz
 
-    // userData’yı reactive ile tanımlıyoruz
+    // userData’yı reactive ile tanımlıyoruz anlık değişebilsinler diye
     const userData = reactive({
       UserName: null,
       Password: null
@@ -36,7 +36,7 @@ export default {
           'Accept': 'application/json',
           'Content-Type': 'application/json;charset=utf-8'
         },
-        body: JSON.stringify(userData), // Reactive data'yı kullanıyoruz
+        body: JSON.stringify(userData), 
         credentials: 'include'
       })
         .then((response) => {
@@ -50,9 +50,9 @@ export default {
         .then((data) => {
           console.log('Login:', data, data?.userName);
           if (data?.userName != null) {
-            console.log("Store'da güncellenen userName:", data?.userName); // Store'a eklenen veriyi kontrol et
+            console.log("Store'da güncellenen userName:", data?.userName); 
             store.commit('setAuthenticated', true);
-            store.commit("setUser", data?.userName);  // Vuex store’a veri ekliyoruz
+            store.commit("setUser", data?.userName); 
             store.dispatch('startSessionCheck');
             router.push({ name: 'HomePage' });
           }

@@ -7,7 +7,6 @@ export default createStore({
     state: {
         user: null,
         isAuthenticated: false,
-        intervalId: null,  // Interval ID'si burada saklanacak
     },
     mutations: {
         setUser(state, user) {
@@ -44,15 +43,14 @@ export default createStore({
                     else {
                         commit('setAuthenticated', false);
                         commit('logoutUser');
-                        this.stopSessionCheck();
                     }
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                     commit('setAuthenticated', false);
                     commit('logoutUser');
-                    this.stopSessionCheck();
                 });
+
         },
         startSessionCheck({ dispatch }) {
             // Interval'ı başlat
@@ -74,7 +72,9 @@ export default createStore({
     beforeUnmount() {
         // Eğer bileşen yok ediliyorsa, interval'i temizle
         if (this.intervalId != null) {
+            console.log("interval silindi");
             clearInterval(this.intervalId);
+            this.intervalId = null;
         }
     },
     getters: {
@@ -83,13 +83,13 @@ export default createStore({
             const user = state.user;
             delete user?.password;
             return user;
-        }
+        },
     },
     // plugins : [createPersistedState({key : "user"})]
     plugins: [
-        createPersistedState({
+        createPersistedState({   //kalıcı hale getir.
             key: "user",
-            storage: {
+            storage: {  // ls ile şifrele
                 getItem: (key) => ls.get(key),
                 setItem: (key, value) => ls.set(key, value),
                 removeItem: (key) => ls.remove(key),
