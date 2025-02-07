@@ -1,18 +1,24 @@
 <template>
     <div class="bg-white flex flex-col gap-x-3 rounded-md shadow-sm">
         <div class="p-3">
-            <a href="#" class="hover:text-black font-bold text-l mb-1 text-gray-600 text-center">Vue3
-                Dokümantasyon</a>
+            <a href="#" class="hover:text-black font-bold text-l mb-1 text-gray-600 text-center">
+                {{ item?.name || "" }}
+                {{ item?.model?.name || "" }}
+                <br>
+                {{ item?.model?.brand?.name || "" }}
+                {{ item?.brand?.name || "" }}
+            </a>
             <div class="flex items-center justify-center mt-2 gap-x-1">
-                <button class="like-btn group">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-current group-hover:text-white" height="24"
+                <button class="btn btn-hover">
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" class="fill-current group-hover:text-white" height="24"
                         viewBox="0 0 24 24" width="24">
                         <path d="M0 0h24v24H0V0zm0 0h24v24H0V0z" fill="none" />
                         <path
                             d="M9 21h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.58 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2zM9 9l4.34-4.34L12 10h9v2l-3 7H9V9zM1 9h4v12H1z" />
-                    </svg>
+                    </svg> -->
+                    Görüntüle ->
                 </button>
-                <button class="bookmark-btn group bookmark-item-active">
+                <!-- <button class="bookmark-btn group bookmark-item-active">
                     <svg xmlns="http://www.w3.org/2000/svg" class="fill-current group-hover:text-white"
                         enable-background="new 0 0 24 24" viewBox="0 0 24 24" width="24" height="24">
                         <rect fill="none" />
@@ -33,13 +39,25 @@
                             explicabo dolor, odit eligendi voluptate illum itaque accusantium, cumque
                             tenetur cupiditate illo libero dolores!</p>
                     </button>
-                </div>
+                </div>-->
             </div>
-            <div class="text-xs text-gray-400 mt-2 flex justify-between">
+            <!-- <div class="text-xs text-gray-400 mt-2 flex justify-between">
                 <a href="#" class="hover:text-black"> Gökhan Kandemir </a>
                 <span>14 Mart</span>
-            </div>
+            </div>  -->
         </div>
-        <div class="bg-red-200 p-1 text-red-900 text-center text-sm">Vue.js</div>
+        <!-- <div class="bg-red-200 p-1 text-red-900 text-center text-sm">Vue.js</div>  -->
     </div>
 </template>
+
+<script>
+export default {
+    props: {
+        item: {
+            type: Object,
+            required: true,
+            default: () => { }
+        }
+    }
+}
+</script>

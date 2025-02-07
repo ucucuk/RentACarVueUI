@@ -1,7 +1,9 @@
 import { createStore } from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import SecureLS from "secure-ls";
+import router from "../router";
 
+const minutes = 5 * 60 * 1000;
 var ls = new SecureLS({ isCompression: false });
 export default createStore({
     state: {
@@ -15,9 +17,16 @@ export default createStore({
         logoutUser(state) {
             state.user = null;
             state.isAuthenticated = false;
+            router.push({ name: "LoginPage" });
+            console.log("logout user login page calıstı");
         },
         setAuthenticated(state, status) {
             state.isAuthenticated = status;
+            if(!status)
+            {
+                router.push({ name: "LoginPage" });
+                console.log("setAuthenticated login page calıstı");
+            }
         }
     },
     actions: {
@@ -53,11 +62,12 @@ export default createStore({
 
         },
         startSessionCheck({ dispatch }) {
+            dispatch('checkSession');
             // Interval'ı başlat
             if (this.intervalId == null) {
                 this.intervalId = setInterval(() => {
-                    dispatch('checkSession'); // Her 65 saniyede bir session kontrolü yap
-                }, 65000);
+                    dispatch('checkSession');
+                }, minutes);
             }
         },
         stopSessionCheck() {

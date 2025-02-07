@@ -119,6 +119,7 @@ export default {
                 .catch((error) => {
                     console.error('Error:', error);
                 });
+                
         },
         yenimarkafunc() {
             const marka = { name: this.yeniMarka };

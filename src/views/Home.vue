@@ -2,7 +2,7 @@
     <appHeader />
     <div class="flex flex-row">
         <SideBar />
-        <appBookmarkList />
+        <appItemList :ItemList ="ItemList" />
 
 
     </div>
@@ -12,7 +12,16 @@
 </template>
 <script>
 import SideBar from '@/components/Home/SideBar.vue';
+import { ref } from "vue";
+import store from "./../store";
+
 export default {
+    setup(){
+        const ItemList = ref([]);
+        return {
+            ItemList,
+        };
+    },
     components: {
         SideBar
     },
@@ -31,6 +40,32 @@ export default {
                 }
             })
         }
+    }
+    ,
+    created(){
+        store.dispatch('startSessionCheck');
+        
+        fetch("https://localhost:44335/api/Brands", {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include' // Cookie'leri göndermek için
+            })
+                .then((response) => {
+                    if (response.status === 401) {
+                        console.error('Unauthorized. Check cookies and authentication!');
+                        return;
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    this.ItemList = data;
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+                
     }
 };
 </script>
