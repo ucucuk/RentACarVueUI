@@ -1,8 +1,10 @@
 <template>
-    <appHeader />
-    <div class="flex flex-row">
-        <SideBar @UpdateItemList="UpdateItemList" />
-        <appItemList  />
+    <div class="jumbotron mt-2 form-area">
+        <appHeader />
+        <div class="flex flex-row">
+            <SideBar @UpdateItemList="UpdateItemList" />
+            <appItemList />
+        </div>
     </div>
 </template>
 <script>
@@ -13,7 +15,7 @@ import { mapGetters } from 'vuex';
 export default {
     setup() {
         const ItemList = ref(store.getters._getItemList);
-        const ItemListType =  ref(store.getters._getItemListType);
+        const ItemListType = ref(store.getters._getItemListType);
         return {
             ItemList,
             ItemListType,

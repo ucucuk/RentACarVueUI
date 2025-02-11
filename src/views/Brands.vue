@@ -5,7 +5,7 @@
     <h1>{{ $route.query.type }}</h1>
     <p>Açıklamalar burada yer alacaktır.</p> -->
     <div class="jumbotron mt-2 form-area">
-
+        <appHeader />
         <table class="table table-hover table-striped form-area border">
             <thead>
                 <tr>

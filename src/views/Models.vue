@@ -4,12 +4,12 @@
     <h1>{{ $route.query.user }}</h1>
     <h1>{{ $route.query.type }}</h1>
     <p>Açıklamalar burada yer alacaktır.</p> -->
-    <h1>{{ $route.query.BrandName }}</h1>
     <div class="jumbotron mt-2 form-area ">
+        <appHeader />
         <table class="table table-hover table-striped form-area border">
             <thead>
                 <tr>
-                    <th>{{ baslik }}</th>
+                    <th>{{ $route.query.BrandName }} {{ baslik }}</th>
                     <th></th>
                     <th></th>
                     <th>

@@ -1,5 +1,6 @@
 <template>
     <div class="jumbotron mt-2 form-area ">
+        <appHeader />
         <table class="table table-hover table-striped form-area border">
             <thead>
                 <tr>

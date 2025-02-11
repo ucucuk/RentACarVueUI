@@ -1,33 +1,43 @@
 <template>
-    <div class="bg-white flex flex-col gap-x-3 rounded-md shadow-sm">
-        <div class="p-3">
-            <a href="#" class=" badge text-bg-info p-3 ">
-                <span> {{ _getItemListType == "Brands" || _getItemListType == "Models" ? item?.name || "" : "" }}
-                    <br v-if="_getItemListType == 'Models'" />
-                    {{ _getItemListType == "Models" ? item?.brand?.name || "" : "" }}
-                </span>
-                <span> {{ _getItemListType == "Cars" ? item?.model?.name || "" : "" }}
-                    <br>
-                    {{ _getItemListType == "Cars" ? item?.model?.brand?.name || "" : "" }}
-                </span>
-            </a>
-            <div class="">
+    <div class="bg-white flex flex-col rounded-md shadow-sm">
+        <div class="text-info-emphasis flex justify-between">
+                <div v-if="_getItemListType === 'Brands'">
+                    <span>
+                        {{ item?.name || "" }}
+                    </span>
+                </div>
+                <div v-if="_getItemListType === 'Models'">
+                    <span>
+                        {{ item?.brand?.name || "" }}
+                        <br/>
+                        {{ item?.name || "" }}
+                    </span>
+                </div>
+                <div v-if="_getItemListType === 'Cars'">
+                    <span> 
+                        {{ item?.model?.brand?.name || "" }}
+                        <br>
+                        {{ item?.model?.name || "" }}
+                        <br>
+                        {{ item?.modelYear || "" }}
+                        <br>
+                        {{ item?.plate || "" }}
+                    </span>
+                </div>
+        </div>
+        <div class="justify-between">
                 <button v-if="_getItemListType == 'Brands'" class=" btn btn-outline-info"
                     @click="goToModelsPage(item?.name)">
-                    Modelleri Görüntüle/Düzenle
+                    Modelleri Gör/Düzenle
                 </button>
                 <button v-if="_getItemListType == 'Brands'" class=" btn btn-outline-info"
                     @click="goToModels(item?.name)">
                     Modelleri Görüntüle
                 </button>
             </div>
-            <!-- <div class="text-xs text-gray-400 mt-2 flex justify-between">
-                <a href="#" class="hover:text-black"> Gökhan Kandemir </a>
-                <span>14 Mart</span>
-            </div>  -->
-        </div>
         <!-- <div class="bg-red-200 p-1 text-red-900 text-center text-sm">Vue.js</div>  -->
     </div>
+    
 </template>
 
 <script>
@@ -41,14 +51,13 @@ export default {
 
         const goToModels = (BrandName) => {
             const api = "https://localhost:44335/api/Models/GetModelsByBrand?brand=" + BrandName;
-            store.commit("setApi",api)
+            store.commit("setApi", api)
             fetch(api)
                 .then((response) => response.json())
                 .then((data) => {
-                    store.commit("setItemList",data)
-                    store.commit("setItemListType","Models")
+                    store.commit("setItemList", data)
+                    store.commit("setItemListType", "Models")
                 });
-
         };
         return {
             ItemList,
