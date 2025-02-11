@@ -20,9 +20,9 @@
           </svg>
           New
         </router-link> -->
-        <div class="relative group">
+        <div class="relative group ">
           <!-- New -->
-          <button class="btn btn-success" @click="toggleMenuNew()">
+          <button class="btn btn-success " @click="toggleMenuNew()">
             <svg xmlns="http://www.w3.org/2000/svg" class="fill-current" height="16" viewBox="0 0 24 24" width="16">
               <path d="M0 0h24v24H0V0z" fill="none" />
               <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
@@ -31,7 +31,6 @@
           </button>
           <nav :class="{ 'd-none': !menuVisibleNew }"
             class="bg-white rounded-md shadow-md p-2 w-56 position-absolute top-100 end-0">
-
             <router-link :to="{ name: 'NewBrand' }" class="mb-2 menu-item">
               <svg xmlns="http://www.w3.org/2000/svg" height="24" class="fill-current mr-1" viewBox="0 0 24 24"
                 width="24">
@@ -131,9 +130,11 @@ export default {
   methods: {
     toggleMenuNew() {
       this.menuVisibleNew = !this.menuVisibleNew;
+      this.menuVisibleAccount=false;
     },
     toggleMenuAccount() {
       this.menuVisibleAccount = !this.menuVisibleAccount;
+      this.menuVisibleNew=false;
     },
     onLogout() {
       store.commit("logoutUser");

@@ -4,6 +4,7 @@
     <h1>{{ $route.query.user }}</h1>
     <h1>{{ $route.query.type }}</h1>
     <p>Açıklamalar burada yer alacaktır.</p> -->
+    <h1>{{ $route.query.BrandName }}</h1>
     <div class="jumbotron mt-2 form-area ">
         <table class="table table-hover table-striped form-area border">
             <thead>
@@ -78,6 +79,7 @@ export default {
         const yeniModel = ref("");
         const duzenlenenModel = ref(null);
         const silinenModel = ref(null);
+        const api = ref("");
         // const duzenleModel= ref({ id: "", name: "", });
         return {
             models,
@@ -87,6 +89,7 @@ export default {
             yeniModel,
             duzenlenenModel,
             silinenModel,
+            api
             // duzenleModel,
         };
     },
@@ -100,7 +103,14 @@ export default {
             this.$router.push("/");
         },
         listele() {
-            fetch("https://localhost:44335/api/Models")
+            if (this.$route.query.BrandName != null) {
+                this.api = "https://localhost:44335/api/Models/GetModelsByBrand?brand=" + this.$route.query.BrandName;
+            }
+            else {
+                this.api = "https://localhost:44335/api/Models";
+            }
+            console.log(this.api);
+            fetch(this.api)
                 .then((response) => response.json())
                 .then((data) => {
                     console.log(data);

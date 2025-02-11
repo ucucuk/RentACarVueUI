@@ -1,26 +1,27 @@
 <template>
     <appHeader />
     <div class="flex flex-row">
-        <SideBar />
-        <appItemList :ItemList ="ItemList" />
-
-
+        <SideBar @UpdateItemList="UpdateItemList" />
+        <appItemList  />
     </div>
-
-
-
 </template>
 <script>
 import SideBar from '@/components/Home/SideBar.vue';
 import { ref } from "vue";
 import store from "./../store";
-
+import { mapGetters } from 'vuex';
 export default {
-    setup(){
-        const ItemList = ref([]);
+    setup() {
+        const ItemList = ref(store.getters._getItemList);
+        const ItemListType =  ref(store.getters._getItemListType);
         return {
             ItemList,
+            ItemListType,
         };
+    },
+    computed: {
+        ...mapGetters(["_getItemList"]),
+        ...mapGetters(["_getItemListType"])
     },
     components: {
         SideBar
@@ -39,13 +40,10 @@ export default {
                     user: "ulas"
                 }
             })
-        }
-    }
-    ,
-    created(){
-        store.dispatch('startSessionCheck');
-        
-        fetch("https://localhost:44335/api/Brands", {
+        },
+        UpdateItemList() {
+            const api = store.getters._getApi;
+            fetch(api, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -60,12 +58,36 @@ export default {
                     return response.json();
                 })
                 .then((data) => {
-                    this.ItemList = data;
+                    store.commit("setItemList", data);
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
-                
+        }
+    },
+    created() {
+        fetch("https://localhost:44335/api/Brands", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include' // Cookie'leri göndermek için
+        })
+            .then((response) => {
+                if (response.status === 401) {
+                    console.error('Unauthorized. Check cookies and authentication!');
+                    return;
+                }
+                return response.json();
+            })
+            .then((data) => {
+                store.commit("setItemList", data);
+                store.commit("setItemListType", "Brands");
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
     }
 };
 </script>

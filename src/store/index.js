@@ -9,8 +9,20 @@ export default createStore({
     state: {
         user: null,
         isAuthenticated: false,
+        api: "",
+        itemList: null,
+        itemListType: "",
     },
     mutations: {
+        setApi(state, api ) {
+            state.api = api;
+        },
+        setItemList(state, itemList) {
+            state.itemList = itemList;
+        },
+        setItemListType(state, itemListType ) {
+            state.itemListType = itemListType;
+        },
         setUser(state, user) {
             state.user = user;
         },
@@ -22,8 +34,7 @@ export default createStore({
         },
         setAuthenticated(state, status) {
             state.isAuthenticated = status;
-            if(!status)
-            {
+            if (!status) {
                 router.push({ name: "LoginPage" });
                 console.log("setAuthenticated login page calıstı");
             }
@@ -89,6 +100,9 @@ export default createStore({
     },
     getters: {
         _isAuthenticated: state => state.isAuthenticated,
+        _getApi: state => state.api,
+        _getItemList: state => state.itemList,
+        _getItemListType: state => state.itemListType,
         _getCurrentUser(state) {
             const user = state.user;
             delete user?.password;
