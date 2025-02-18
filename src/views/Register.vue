@@ -8,7 +8,7 @@
       class="input mb-3" />
     <input v-model="userData.UserName" type="text" placeholder="Kullanıcı Adı" class="input mb-3" />
     <input v-model="userData.Password" type="password" placeholder="Şifre" class="input mb-3" />
-    <button class="default-button" @click="newUserFunc()" >Kayıt ol</button>
+    <button class="default-button" @click="newUserFunc()">Kayıt ol</button>
     <span class="text-center mt-3 text-sm">
       Zaten Üyeyim,
       <router-link :to="{ name: 'LoginPage' }" class="text-red-900 hover:text-black">
@@ -18,6 +18,8 @@
   </div>
 </template>
 <script>
+import store from '@/store';
+
 
 export default {
   data() {
@@ -36,25 +38,31 @@ export default {
     onSave() {
       console.log(this.userData);
     },
-        newUserFunc() {
-            fetch("https://localhost:44335/api/Users/CreateMongoIdentityUser", {
-                method: 'POST',
-                headers: {
-                    //'Authorization': 'Bearer ' + this.token,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-                body: JSON.stringify(this.userData)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Success:', data);
-                    this.$router.push({name:'HomePage'})
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
+    newUserFunc() {
+      fetch("https://localhost:44335/api/Users/CreateMongoIdentityUser", {
+        method: 'POST',
+        headers: {
+          //'Authorization': 'Bearer ' + this.token,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json;charset=utf-8'
         },
+        credentials: 'include',
+        body: JSON.stringify(this.userData)
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          console.log("bekleme basladı:");
+          setTimeout(() => {
+            console.log("bekliyor:");
+          }, 11000); // 2 saniye sonra çalışacak
+          store.dispatch('startSessionCheck');
+          this.$router.push({ name: 'HomePage' });
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    },
   }
 };
 </script>

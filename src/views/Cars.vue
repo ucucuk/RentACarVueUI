@@ -4,7 +4,7 @@
         <table class="table table-hover table-striped form-area border">
             <thead>
                 <tr>
-                    <th>{{ baslik }}</th>
+                    <th>{{ $route.query.ModelName }} {{ baslik }}</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -40,8 +40,7 @@
                             <button class="btn btn-sm btn-success" @click="editPlate = null">Cancel</button>
                         </td>
                         <td>
-                            <button class="btn btn-sm btn-danger"
-                                @click="editcarfunc(editPlate)">Save</button>
+                            <button class="btn btn-sm btn-danger" @click="editcarfunc(editPlate)">Save</button>
                         </td>
                     </div>
                     <div v-else-if="c === deletePlate">
@@ -76,11 +75,13 @@ export default {
         const baslik = ref("Cars");
         const editPlate = ref(null);
         const deletePlate = ref(null);
+        const api = ref("");
         return {
             cars,
             baslik,
             editPlate,
             deletePlate,
+            api,
         };
     },
     created() {
@@ -93,7 +94,13 @@ export default {
             this.$router.push("/");
         },
         listele() {
-            fetch("https://localhost:44335/api/Cars")
+            if (this.$route.query.ModelName != null) {
+                this.api = "https://localhost:44335/api/Cars/GetCarsByModel?model=" + this.$route.query.ModelName;
+            }
+            else {
+                this.api = "https://localhost:44335/api/Cars";
+            }
+            fetch(this.api)
                 .then((response) => response.json())
                 .then((data) => {
                     console.log(data);

@@ -14,6 +14,9 @@
   <RouterLink  class="nav-link" active-class="active" to="/about">
     About
   </RouterLink>
+  <RouterLink  class="nav-link" active-class="active" to="/admin">
+    Admin
+  </RouterLink>
   <RouterLink  class="nav-link" active-class="active" to="/brands">
     Brands
   </RouterLink>

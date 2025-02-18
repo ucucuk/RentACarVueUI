@@ -3,7 +3,7 @@ import createPersistedState from "vuex-persistedstate";
 import SecureLS from "secure-ls";
 import router from "../router";
 
-const minutes = 5 * 60 * 1000;
+const minutes = 3 * 60 * 1000;
 var ls = new SecureLS({ isCompression: false });
 export default createStore({
     state: {

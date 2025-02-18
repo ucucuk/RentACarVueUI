@@ -9,55 +9,59 @@
         <table class="table table-hover table-striped form-area border">
             <thead>
                 <tr>
-                    <th>{{ $route.query.BrandName }} {{ baslik }}</th>
+                    <th>{{ baslik }}</th>
                     <th></th>
                     <th></th>
                     <th>
-                        <button class="btn btn-primary btn-sm" @click="$router.push({ name: 'NewModel' })">+ Add Model
+                        <button class="btn btn-primary btn-sm" @click="$router.push({ name: 'RegisterPage' })">+ Add
+                            User
                         </button>
                     </th>
                 </tr>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Brand</th>
-                    <th scope="col">Model</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Surname</th>
+                    <th scope="col">Roles</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(m, index) in models" :key="m.id"
-                    :class="{ 'table-warning': m === duzenlenenModel || m === silinenModel }">
+                <tr v-for="(u, index) in users" :key="u.id"
+                    :class="{ 'table-warning': u === duzenlenenUser || u === silinenUser }">
                     <td scope="row">{{ index + 1 }}</td>
+                    <td><span>{{ u.userName }}</span></td>
+
+                    <td><span>{{ u.firstName }}</span></td>
+
+                    <td><span>{{ u.lastName }}</span></td>
                     <td>
-                        <span>{{ m.brand?.name }}</span>
+                        <input v-if="u === duzenlenenUser" v-model="duzenlenenUser.roles">
+                        <span v-else>{{ u.roles }}</span>
                     </td>
-                    <td>
-                        <input v-if="m === duzenlenenModel" v-model="duzenlenenModel.name">
-                        <span v-else>{{ m.name }}</span>
-                    </td>
-                    <div v-if="m === duzenlenenModel">
+                    <div v-if="u === duzenlenenUser">
                         <td>
-                            <button class="btn btn-sm btn-success" @click="duzenlenenModel = null">Cancel</button>
+                            <button class="btn btn-sm btn-success" @click="duzenlenenUser = null">Cancel</button>
                         </td>
                         <td>
-                            <button class="btn btn-sm btn-danger"
-                                @click="duzenlemodelfunc(duzenlenenModel)">Save</button>
+                            <button class="btn btn-sm btn-danger" @click="duzenleUserfunc(duzenlenenUser)">Save</button>
                         </td>
                     </div>
-                    <div v-else-if="m === silinenModel">
+                    <div v-else-if="u === silinenUser">
                         <td>
-                            <button class="btn btn-sm btn-success" @click="silinenModel = null">Cancel</button>
+                            <button class="btn btn-sm btn-success" @click="silinenUser = null">Cancel</button>
                         </td>
                         <td>
-                            <button class="btn btn-sm btn-danger" @click="modelsilfunc(m)">Yes Delete</button>
+                            <button class="btn btn-sm btn-danger" @click="usersilfunc(u)">Yes Delete</button>
                         </td>
                     </div>
                     <div v-else>
                         <td>
-                            <button class="btn btn-sm btn-info" @click="duzenlenenModel = m">Edit</button>
+                            <button class="btn btn-sm btn-info" @click="duzenlenenUser = u">Edit</button>
                         </td>
                         <td>
-                            <button class="btn btn-sm btn-danger" @click="silinenModel = m">Delete</button>
+                            <button class="btn btn-sm btn-danger" @click="silinenUser = u">Delete</button>
                         </td>
                     </div>
                 </tr>
@@ -72,19 +76,19 @@ import { ref } from "vue";
 
 export default {
     setup() {
-        const models = ref([]);
-        const baslik = ref("Models");
-        const yeniModel = ref("");
-        const duzenlenenModel = ref(null);
-        const silinenModel = ref(null);
+        const users = ref([]);
+        const baslik = ref("Users");
+        const yeniUser = ref("");
+        const duzenlenenUser = ref(null);
+        const silinenUser = ref(null);
         const api = ref("");
         // const duzenleModel= ref({ id: "", name: "", });
         return {
-            models,
+            users,
             baslik,
-            yeniModel,
-            duzenlenenModel,
-            silinenModel,
+            yeniUser,
+            duzenlenenUser,
+            silinenUser,
             api
             // duzenleModel,
         };
@@ -99,22 +103,18 @@ export default {
             this.$router.push("/");
         },
         listele() {
-            if (this.$route.query.BrandName != null) {
-                this.api = "https://localhost:44335/api/Models/GetModelsByBrand?brand=" + this.$route.query.BrandName;
-            }
-            else {
-                this.api = "https://localhost:44335/api/Models";
-            }
+            this.api = "https://localhost:44335/api/Users";
             console.log(this.api);
             fetch(this.api)
                 .then((response) => response.json())
                 .then((data) => {
                     console.log(data);
-                    this.models = data;
+                    this.users = data;
                 });
         },
-        modelsilfunc(model) {
-            fetch("https://localhost:44335/api/Models/" + model.id, {
+        usersilfunc(user) {
+            console.log(user.id);
+            fetch("https://localhost:44335/api/Users/" + user.id, {
                 method: 'DELETE',
                 headers: {
                     //'Authorization': 'Bearer ' + this.token,
@@ -132,26 +132,28 @@ export default {
                 .catch((error) => {
                     console.error('Error:', error);
                 });
-            this.silinenModel = null;
+            this.silinenUser = null;
         },
-        duzenlemodelfunc(duzenlenenModel) {
-            fetch("https://localhost:44335/api/Models", {
-                method: 'PUT',
+        duzenleUserfunc(duzenlenenUser) {
+            const request = { userName : duzenlenenUser.userName , roles : duzenlenenUser.roles};
+            fetch("https://localhost:44335/api/Users/UpdateRoles", {
+                method: 'POST',
                 headers: {
                     //'Authorization': 'Bearer ' + this.token,
                     'Accept': 'application/json',
                     'Content-Type': 'application/json;charset=utf-8'
                 },
-                body: JSON.stringify(duzenlenenModel)
+                body: JSON.stringify(request)
             })
                 .then(data => {
                     console.log('Success:', data);
+                    console.log('request:', request);
                     this.listele();
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
-            this.duzenlenenModel = null;
+            this.duzenlenenUser = null;
         },
     },
 };

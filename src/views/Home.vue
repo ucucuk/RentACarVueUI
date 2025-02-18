@@ -68,6 +68,7 @@ export default {
         }
     },
     created() {
+        store.dispatch('startSessionCheck');
         fetch("https://localhost:44335/api/Brands", {
             method: 'GET',
             headers: {

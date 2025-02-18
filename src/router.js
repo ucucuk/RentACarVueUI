@@ -28,6 +28,12 @@ const routes = [
 
     },
     {
+        name: "AdminPage",
+        path: "/admin",
+        component: () => import("@/views/Admin")
+
+    },
+    {
         name: "BrandsPage",
         path: "/brands",
         component: () => import("@/views/Brands")
@@ -62,7 +68,7 @@ const routes = [
         path: "/newcar",
         component: () => import("@/views/NewCar")
 
-    }
+    },
 ]
 const router = createRouter({
     routes: routes,
@@ -76,15 +82,29 @@ router.beforeEach((to, from, next) => {
     const _isAuthenticated = store.getters._isAuthenticated;
     // console.log(to, from);
     if (authNotRequiredRoutes.indexOf(to.name) > -1) {
-        if (_isAuthenticated) next(false);
+        if (_isAuthenticated) {
+            console.log("1111111111"+to.name);
 
+            next(false);
+        }
+        console.log("2222222222222222"+to.name);
     }
     if (authRequiredRoutes.indexOf(to.name) > -1) {
-        if (_isAuthenticated) next();
-        else next({ name: "LoginPage" });
+        if (_isAuthenticated) {
+            next();
+            console.log("3333333333"+to.name);
+
+        }
+        else {
+            next({ name: "LoginPage" });
+            console.log("4444444444444"+to.name);
+
+        }
     }
     else {
         next();
+        console.log("55555555555555"+to.name);
+
     }
 })
 export default router;
