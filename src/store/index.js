@@ -8,6 +8,8 @@ var ls = new SecureLS({ isCompression: false });
 export default createStore({
     state: {
         user: null,
+        userName: null,
+        userRoles: null,
         isAuthenticated: false,
         api: "",
         itemList: null,
@@ -25,9 +27,13 @@ export default createStore({
         },
         setUser(state, user) {
             state.user = user;
+            state.userName = user?.userName;
+            state.userRoles = user?.roles;
         },
         logoutUser(state) {
             state.user = null;
+            state.userName = null;
+            state.userRoles = null;
             state.isAuthenticated = false;
             router.push({ name: "LoginPage" });
             console.log("logout user login page calıstı");
@@ -45,7 +51,8 @@ export default createStore({
             fetch("https://localhost:44335/api/Users/CheckLogin", {
                 method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                     credentials: 'include'
                 },
                 credentials: 'include' // Cookie'
             })
@@ -108,6 +115,8 @@ export default createStore({
             delete user?.password;
             return user;
         },
+        _getCurrentUserRoles: state => state.userRoles,
+        _getCurrentUserName: state => state.userName,
     },
     // plugins : [createPersistedState({key : "user"})]
     plugins: [

@@ -48,11 +48,10 @@ export default {
           return response.json();
         })
         .then((data) => {
-          console.log('Login:', data, data?.userName);
           if (data?.userName != null) {
             console.log("Store'da güncellenen userName:", data?.userName); 
             store.commit('setAuthenticated', true);
-            store.commit("setUser", data?.userName); 
+            store.commit("setUser", data); 
             store.dispatch('startSessionCheck');
             router.push({ name: 'HomePage' });
           }

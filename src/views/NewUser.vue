@@ -8,17 +8,10 @@
       class="input mb-3" />
     <input v-model="userData.UserName" type="text" placeholder="Kullanıcı Adı" class="input mb-3" />
     <input v-model="userData.Password" type="password" placeholder="Şifre" class="input mb-3" />
-    <button class="default-button" @click="newUserFunc()">Kayıt ol</button>
-    <span class="text-center mt-3 text-sm">
-      Zaten Üyeyim,
-      <router-link :to="{ name: 'LoginPage' }" class="text-red-900 hover:text-black">
-        Giriş yap!>
-      </router-link>
-    </span>
+    <button class="default-button" @click="newUserFunc()">Kayıt et</button>
   </div>
 </template>
 <script>
-import store from '@/store';
 
 
 export default {
@@ -54,10 +47,7 @@ export default {
         })
         .then(data => {
           console.log('Success:', data);
-          setTimeout(() => {
-            this.$router.push({ name: 'HomePage' });
-          }, 2000); // 2 saniye sonra çalışacak
-          store.dispatch('startSessionCheck');
+          this.$router.push({ name: 'AdminPage' });
         })
         .catch((error) => {
           console.error('Error:', error);

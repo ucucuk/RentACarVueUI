@@ -13,7 +13,7 @@
                     <th></th>
                     <th></th>
                     <th>
-                        <button class="btn btn-primary btn-sm" @click="$router.push({ name: 'RegisterPage' })">+ Add
+                        <button class="btn btn-primary btn-sm" @click="$router.push({ name: 'NewUser' })">+ Add
                             User
                         </button>
                     </th>
@@ -105,7 +105,7 @@ export default {
         listele() {
             this.api = "https://localhost:44335/api/Users";
             console.log(this.api);
-            fetch(this.api)
+            fetch(this.api, { credentials: 'include' })
                 .then((response) => response.json())
                 .then((data) => {
                     console.log(data);
@@ -121,6 +121,7 @@ export default {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json;charset=utf-8'
                 }
+                , credentials: 'include'
             })
                 .then(data => {
                     console.log('Success:', data);
@@ -135,7 +136,7 @@ export default {
             this.silinenUser = null;
         },
         duzenleUserfunc(duzenlenenUser) {
-            const request = { userName : duzenlenenUser.userName , roles : duzenlenenUser.roles};
+            const request = { userName: duzenlenenUser.userName, roles: duzenlenenUser.roles };
             fetch("https://localhost:44335/api/Users/UpdateRoles", {
                 method: 'POST',
                 headers: {
@@ -144,6 +145,7 @@ export default {
                     'Content-Type': 'application/json;charset=utf-8'
                 },
                 body: JSON.stringify(request)
+                , credentials: 'include'
             })
                 .then(data => {
                     console.log('Success:', data);

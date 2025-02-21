@@ -45,6 +45,7 @@ export default {
                     'Content-Type': 'application/json;charset=utf-8'
                 },
                 body: JSON.stringify(this.userData)
+                , credentials: 'include'
             })
                 .then(response => response.json())
                 .then(data => {

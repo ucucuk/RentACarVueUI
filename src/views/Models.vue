@@ -106,7 +106,7 @@ export default {
                 this.api = "https://localhost:44335/api/Models";
             }
             console.log(this.api);
-            fetch(this.api)
+            fetch(this.api, { credentials: 'include' })
                 .then((response) => response.json())
                 .then((data) => {
                     console.log(data);
@@ -120,7 +120,7 @@ export default {
                     //'Authorization': 'Bearer ' + this.token,
                     'Accept': 'application/json',
                     'Content-Type': 'application/json;charset=utf-8'
-                }
+                }, credentials: 'include'
             })
                 .then(data => {
                     console.log('Success:', data);
@@ -143,6 +143,7 @@ export default {
                     'Content-Type': 'application/json;charset=utf-8'
                 },
                 body: JSON.stringify(duzenlenenModel)
+                , credentials: 'include'
             })
                 .then(data => {
                     console.log('Success:', data);

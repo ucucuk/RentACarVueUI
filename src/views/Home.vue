@@ -9,21 +9,18 @@
 </template>
 <script>
 import SideBar from '@/components/Home/SideBar.vue';
-import { ref } from "vue";
+import { computed } from "vue";
 import store from "./../store";
-import { mapGetters } from 'vuex';
 export default {
     setup() {
-        const ItemList = ref(store.getters._getItemList);
-        const ItemListType = ref(store.getters._getItemListType);
+        const ItemList =computed(() => store.getters._getItemList);
+        const ItemListType = computed(() => store.getters._getItemListType);
+        const getCurrentUser = computed(() => store.getters._getCurrentUser);
         return {
             ItemList,
             ItemListType,
+            getCurrentUser
         };
-    },
-    computed: {
-        ...mapGetters(["_getItemList"]),
-        ...mapGetters(["_getItemListType"])
     },
     components: {
         SideBar
